@@ -9,7 +9,7 @@ module.exports = appInfo => {
     // add your config here
 
     // 异常处理
-    config['middleware'] = ['errorHandler'];
+    config['middleware'] = ['errorHandler', 'logHandler'];
     config['errorHandler'] = {
         match: '/*'
     }
@@ -35,6 +35,10 @@ module.exports = appInfo => {
     config.logger = {
         consoleLevel: 'INFO',
         level: 'INFO'
+    }
+
+    config.security = {
+        csrf: false
     }
 
     return config;
