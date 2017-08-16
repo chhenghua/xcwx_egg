@@ -11,7 +11,7 @@ module.exports = appInfo => {
     // 异常处理
     config['middleware'] = ['errorHandler'];
     config['errorHandler'] = {
-        match: '/api'
+        match: '/*'
     }
 
     // 日志切割处理

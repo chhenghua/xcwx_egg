@@ -2,9 +2,11 @@
 
 module.exports = app => {
     class SearchController extends app.Controller {
-        * indexSearch() {
-            this.body = `search : ${this.ctx.query.name}`
+        async indexSearch() {
+            const query = this.ctx.query
+            this.ctx.body = query
         }
     }
-    return SearchController
-}
+
+    return SearchController;
+};

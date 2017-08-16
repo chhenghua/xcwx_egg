@@ -2,12 +2,10 @@
 
 module.exports = app => {
     class HomeController extends app.Controller {
-        * index() {
-            throw new Error('This is a test error')
+        async index() {
+            console.log(app.config)
             this.ctx.body = {
-                success: 'success',
-                data: {},
-                status: "success"
+                success: 'success'
             }
         }
     }
