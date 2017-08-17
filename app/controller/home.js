@@ -1,12 +1,13 @@
 'use strict';
 
+const user = require('../service/user')
+
+// 路由层完成参数的检验
 module.exports = app => {
     class HomeController extends app.Controller {
         async index() {
-            this.ctx.body = {
-                success: 'success',
-                data: this.ctx.params
-            }
+            const rlt = await user.find({e: 'a', d: 'e'})
+            this.ctx.body = rlt
         }
     }
 
