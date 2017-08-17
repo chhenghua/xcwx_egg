@@ -1,5 +1,5 @@
 'use strict'
 
 module.exports = app => {
-    app.get('/api/search/index', 'search.indexSearch')
+    app.post('/api/search/index', 'search.indexSearch')
 }

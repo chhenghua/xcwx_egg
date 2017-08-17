@@ -1,13 +1,17 @@
-module.exports = (app) => {
+module.exports = () => {
     return function* logHandler(next) {
         try {
             const start = new Date()
             const request = this.request
-            console.log(request)
             yield next;
             const body = this.body
-            // console.log(this.app.loggers.logger.info('ssssssss'))
-            app.loggers.logger.info(`Request body: ${body}`)
+            this.app.loggers.logger.info({
+                method: request.method,
+                url: request.url,
+                'Request body': request.body || null,
+                time: (new Date() - start) + ' ms',
+                'Response data': body
+            })
         } catch (err) {
             this.app.emit('error', err, this);
             this.body = {

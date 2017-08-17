@@ -5,5 +5,5 @@
 module.exports = (app) => {
 
     // 在定义路由的时候需要写注释清楚路由的业务功能
-    app.post('/api/sss', 'home.index')
+    app.get('/api/sss/:pname', 'home.index')
 }
