@@ -9,6 +9,7 @@
     "egg-logrotator": "^2.2.3",
     "egg-scripts": "^1.0.0",
     "joi": "^10.6.0",
+    "oracledb": "^1.13.1",
     "util": "^0.10.3",
     "zbmy-orm": "^1.0.25"
   },
