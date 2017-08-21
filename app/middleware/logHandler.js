@@ -5,7 +5,7 @@ module.exports = () => {
             const request = this.request
             yield next;
             const body = this.body
-            this.app.loggers.logger.info({
+            logger.info({
                 method: request.method,
                 url: request.url,
                 'Request body': request.body || null,

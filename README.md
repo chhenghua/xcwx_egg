@@ -49,6 +49,19 @@ async index() {
 - 静态配置写到统一的地方，而不是以全局变量的方式声明
 - 代码缩进以4个空格的方式，文件及字符编码为utf8，请勿随意更改
 
+### 有关日志问题
+- 在本地开发中可以用console.log，但请勿上传
+- 如果有必要上传，请用全局提供的logger方法
+```js
+logger.info({
+    method: request.method,
+    url: request.url,
+    'Request body': request.body || null,
+    time: (new Date() - start) + ' ms',
+    'Response data': body
+})
+```
+
 ### 路由、控制器及service的编写规范
 - 路由规范及控制器规范，在控制器处需要进行参数的校验
 ``` js

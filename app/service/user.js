@@ -1,12 +1,17 @@
+const sqlMap = require('../../map/sql')
+
 
 exports.getList = async ({name}) => {
 
-    // select * from user where name like :name
+    const options = sqlMap.getOption()
+    const sql = await sqlMap.getSql({name: "SELECTALL"}).done()
+    const rlt = await sqlMap.exec({sql, options})
 
     return {
         id: 'xxx',
         name,
-        tel: 'xxx'
+        tel: 'xxx',
+        rlt
     }
 }
 
