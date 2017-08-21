@@ -10,7 +10,7 @@
     "egg-scripts": "^1.0.0",
     "joi": "^10.6.0",
     "util": "^0.10.3",
-    "zbmy-orm": "^1.0.24"
+    "zbmy-orm": "^1.0.25"
   },
   "devDependencies": {
     "autod": "^2.9.0",
