@@ -1,7 +1,7 @@
 const SQL = {
     SELECT: {
         SELECTALL: () => {
-            return "select * from test_chenghua_user"
+            return "select * from A_ALIPAY_ORDER"
         }
     }
 }

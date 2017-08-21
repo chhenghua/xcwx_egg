@@ -85,7 +85,7 @@ exports.exec = async ({sql, options}) => {
                 logger.info(`ERROR: ${err}`)
                 return reject(err)
             } else {
-                logger.info(`result: ${result}`)
+                logger.info('result: %j', result)
                 return resolve(result)
             }
         })

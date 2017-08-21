@@ -4,7 +4,8 @@ const sqlMap = require('../../map/sql')
 exports.getList = async ({name}) => {
 
     const options = sqlMap.getOption()
-    const sql = await sqlMap.getSql({name: "SELECTALL"}).done()
+    let sql = await sqlMap.getSql({name: "SELECTALL"})
+    sql = await sql.done()
     const rlt = await sqlMap.exec({sql, options})
 
     return {
