@@ -16,10 +16,10 @@ const functions = {
         let result = open
         for (const key in collection) {
             if (key + 1 === collection.length) {
-                result += ` ${collection[key] ${close}}`
+                result += ` ${collection[key]} ${close}`
                 break
             }
-            result += ` ${collection[key] ${separator}}`
+            result += ` ${collection[key]} ${separator}`
         }
         return result
     }
@@ -85,7 +85,7 @@ exports.exec = async ({sql, options}) => {
                 logger.info(`ERROR: ${err}`)
                 return reject(err)
             } else {
-                logger.info(`result: ${result}`)
+                logger.info('result: %j', result)
                 return resolve(result)
             }
         })
