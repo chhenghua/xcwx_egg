@@ -1,12 +1,9 @@
-const sqlMap = require('../../map/sql')
+const userDao = require('../../dao/user/user')
 
 
 exports.getList = async ({name}) => {
 
-    const options = sqlMap.getOption({})
-    let sql = await sqlMap.getSql({name: "SELECTALL"})
-    sql = await sql.done()
-    const rlt = await sqlMap.exec({sql, options})
+    const rlt = await userDao.getAll({merchantId: 412})
 
     return {
         id: 'xxx',
