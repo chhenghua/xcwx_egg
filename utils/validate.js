@@ -6,7 +6,7 @@ exports.validate = (value, schema) => {
         throw new Error('参数检查的参数须为json')
     }
     const rlt = Joi.validate(value, schema)
-    if (!util.isNull(rlt.error)) {
+    if (util.isNull(rlt.error)) {
         return rlt.value
     } else {
         throw new Error(rlt.error)

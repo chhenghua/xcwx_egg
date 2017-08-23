@@ -1,25 +1,17 @@
-const path = require('path')
 
-exports.database = [
-    {
+exports.database = {
+    database: "orcl",
+    username: "dev_ydm",
+    password: "dev_ydm",
+    options: {
         dialect: "oracle",
-        type: "all",
-        database: "orcl",
-        username: "dev_ydm",
-        password: "dev_ydm",
-        options: {
-            host: '192.168.0.21',
-            logging: false,
-            pool: {
-                max: 300,
-                min: 0,
-                idle: 30 * 1000
-            },
-            timezone: '+08:00',
-            dialect: "oracle"
+        host: "192.168.0.21",
+        port: 1521,
+        pool: {
+            maxConnections: 10,
+            minConnections: 0,
+            maxIdleTime: 30 * 1000,
         },
-        queue: true,
-        maxConcurrentQueries: 150,
-        modelPath: path.join(__dirname, '../../module')
+        timezone: '+08:00',
     }
-]
+}

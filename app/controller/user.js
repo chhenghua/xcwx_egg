@@ -36,10 +36,11 @@ module.exports = app => {
         async add() {
             const scheme = Joi.object().keys({
                 username: Joi.string().required(),
-                gender: Joi.number().required(),
+                gender: Joi.string().required(),
                 address: Joi.string().required()
             })
-            const body = this.request.body
+            const body = this.ctx.request.body
+            console.log(body)
             const {username, gender, address} = Util.validate(body, scheme)
             const rlt = await user.add({username, gender, address})
             this.ctx.body = rlt
