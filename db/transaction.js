@@ -1,39 +1,21 @@
 'use strict'
-const db = require('oracledb')
-const config = require('../config/constant/config')
-const dbconfig = config.database
-
-const createPool = async () => {
-    const pool = await db.createPool({
-        user: dbconfig.username,
-        password: dbconfig.password,
-        connectString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.0.21)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=orcl)))`,
-        poolMax: dbconfig.options.maxConnections,
-        poolTimeout: 30
-    })
-    return pool
-}
-
-const getConnection = async () => {
-    console.log('1111111111111111111')
-    const pool = await createPool()
-    return await pool.getConnection()
-}
+const connection = require('./connection')()
 
 exports.transaction = async (operation) => {
-
-    const connection = await getConnection();
+    console.log('connection...........')
+    console.log(connection)
 
     try {
-        const result = await operation(connection)
+        const result = await operation(connection.conn)
         await connection.commit()
         return Promise.resolve(result)
     } catch (e) {
+        console.log('eeeeeeeeeeeeeeee')
+        console.log(e)
         await connection.rollback()
-        throw new Error(e)
+        return Promise.reject(e)
     } finally {
-        connection.close()
-        connection.release()
+        await connection.close()
     }
 
     // console.log(db.connectionManager.getConnection())

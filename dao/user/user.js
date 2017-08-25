@@ -21,19 +21,20 @@ FROM
     }
 }
 
-exports.addOne = async ({_id, username, gender, type = "INSERT"}, connection = db, transaction) => {
+exports.addOne = async ({id, username, gender}, connection) => {
     const sql = `
 INSERT INTO
-    T_CHENGHUA_USER
-VALUES (:_id, :username, :gender)
+    T_CHENGHUA_USER(ID, "username", "gender")
+VALUES (:id, :username, :gender)
     `
-    try {
-        const conditions = {_id, username, gender}
-        const ret = await connection.execute(sql, conditions)
-        return Promise.resolve(ret)
-    } catch (e) {
-        logger.info('addOneException: %s', e)
-        // throw new Error(e)          // 1
-        return Promise.reject(new Error(e))    // 2
-    }
+    const conditions = [id, username, gender]
+    return new Promise((resolve, reject) => {
+        connection.execute(sql, conditions, (err, result) => {
+            if (err) {
+                return reject(err)
+            } else {
+                return resolve(result)
+            }
+        })
+    })
 }
