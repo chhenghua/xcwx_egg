@@ -25,16 +25,14 @@ exports.addOne = async ({id, username, gender}, connection) => {
     const sql = `
 INSERT INTO
     T_CHENGHUA_USER(ID, "username", "gender")
-VALUES (:id, :username, :gender)
+VALUES (?, ?, ?)
     `
     const conditions = [id, username, gender]
-    return new Promise((resolve, reject) => {
-        connection.execute(sql, conditions, (err, result) => {
-            if (err) {
-                return reject(err)
-            } else {
-                return resolve(result)
-            }
-        })
-    })
+    try {
+        const rlt = await connection.query(sql, conditions)
+        return Promise.resolve(rlt)
+    } catch (e) {
+        logger.info('addOneException: %s', e)
+        return Promise.reject(e)
+    }
 }

@@ -1,5 +1,5 @@
 const userDao = require('../../dao/user/user')
-const transaction = require('../../db/transaction').transaction
+const transaction = require('../../db/transaction')
 
 
 exports.getList = async ({name}) => {
@@ -30,13 +30,9 @@ exports.getOne = async ({userId}) => {
 exports.add = async ({username, pas, gender}) => {
 
     const run = async (conn) => {
-        // const [addOne, addTwo] = Promise.all([
-        //     await userDao.addOne({_id: 111, username: "ch", gender: 0}, conn),
-        //     await userDao.addOne({_id: 'sss', username: "LY", gender: 0}, conn)
-        // ])
         const addOne = await userDao.addOne({id: 111, username: "ch", gender: 0}, conn)
-        return {addOne}
-        // const addTwo = await userDao.addOne({id: 'sss', username: "LY", gender: 0}, conn)
+        const addTwo = await userDao.addOne({id: 'sss', username: "LY", gender: 0}, conn)
+        return {ss: 'sss'}
     }
 
     let ret

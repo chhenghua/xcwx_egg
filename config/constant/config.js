@@ -15,3 +15,15 @@ exports.database = {
         timezone: '+08:00',
     }
 }
+
+exports.mysqlConfig = {
+    database: "xcwx",
+    user: "root",
+    password: "rootoop",
+    host: "localhost",
+    port: 3306,
+    charset: "utf8",
+    timezone: "+08:00",
+    connectionLimit: 300,
+    queueLimit: 10          // default: 0
+}

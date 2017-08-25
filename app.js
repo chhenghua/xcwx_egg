@@ -1,6 +1,6 @@
 'use strict'
 
-const orm = require('zbmy-orm')
+// const orm = require('zbmy-orm')
 const config = require('./config/constant/config')
 
 module.exports = app => {
