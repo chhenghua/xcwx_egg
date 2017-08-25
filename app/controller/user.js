@@ -40,7 +40,6 @@ module.exports = app => {
                 address: Joi.string().required()
             })
             const body = this.ctx.request.body
-            console.log(body)
             const {username, gender, address} = Util.validate(body, scheme)
             const rlt = await user.add({username, gender, address})
             this.ctx.body = rlt
