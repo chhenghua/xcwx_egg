@@ -4,16 +4,15 @@
 // const db = require('../../db/oracle').db
 const debug = require('debug')('dao:user:user')
 
-exports.getAll = async ({merchantId, type = "SELECT"}, connection) => {
+exports.getAll = async (connection) => {
     const sql = `
 SELECT
     *
 FROM 
-    T_CHENGHUA_USER
+    test_user
     `
     try {
-        const conditions = [merchantId]
-        const ret = await connection.query(sql, {type, replacements: conditions})
+        const ret = await connection.query(sql)
         return Promise.resolve(ret)
     } catch (e) {
         debug('getAllException: %s', e)
@@ -24,7 +23,7 @@ FROM
 exports.addOne = async ({id, username, gender}, connection) => {
     const sql = `
 INSERT INTO
-    T_CHENGHUA_USER(ID, "username", "gender")
+    test_user(_id, username, gender)
 VALUES (?, ?, ?)
     `
     const conditions = [id, username, gender]
