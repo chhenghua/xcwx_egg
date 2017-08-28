@@ -32,6 +32,6 @@ VALUES (?, ?, ?)
         return Promise.resolve(rlt)
     } catch (e) {
         logger.info('addOneException: %s', e)
-        return Promise.reject(e)
+        throw new Error(e)
     }
 }

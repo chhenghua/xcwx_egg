@@ -41,7 +41,7 @@ class MySql {
                 if (error) {
                     return reject(error)
                 } else {
-                    return resolve(logger.info('--------db rollback success----------------'))
+                    return resolve(logger.info('--------db rollback success---------------'))
                 }
             })
         })
