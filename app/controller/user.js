@@ -11,7 +11,7 @@ module.exports = app => {
 
             // 首先定义需要校验的参数
             const schema = Joi.object().keys({
-                name: Joi.number().required()
+                name: Joi.string().optional()
             })
 
             // 取得query参数

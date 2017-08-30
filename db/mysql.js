@@ -18,6 +18,12 @@ const getConn = async () => {
     })
 }
 
+// exports.mysql = pool
+
+exports.MySql = async () => {
+    return new MySql(await getConn())
+}
+
 class MySql {
     constructor(conn) {
         this.conn = conn
@@ -160,6 +166,6 @@ class MySql {
 //     })
 // }
 
-module.exports = async () => {
-    return new MySql(await getConn())
-}
+// module.exports = async () => {
+//     return new MySql(await getConn())
+// }

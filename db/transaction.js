@@ -1,8 +1,8 @@
 
-const db = require('./mysql')
+const {MySql} = require('./mysql')
 
 module.exports = async (operation) => {
-    const connection = await db()
+    const connection = await MySql()
     try {
         await connection.beginTransaction()
         const rlt = await operation(connection)

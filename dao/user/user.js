@@ -1,10 +1,9 @@
 
 'use strict'
 
-// const db = require('../../db/oracle').db
-const debug = require('debug')('dao:user:user')
+const {MySql} = require('../../db/mysql')
 
-exports.getAll = async (connection) => {
+exports.getAll = async (connection = MySql) => {
     const sql = `
 SELECT
     *
@@ -15,7 +14,7 @@ FROM
         const ret = await connection.query(sql)
         return Promise.resolve(ret)
     } catch (e) {
-        debug('getAllException: %s', e)
+        logger.info('getAllException: %s', e)
         throw new Error(e)
     }
 }
