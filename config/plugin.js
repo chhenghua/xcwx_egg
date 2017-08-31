@@ -14,3 +14,10 @@ exports.development = {
     enable: true,
     package: 'egg-development'
 }
+
+exports.session = true
+
+// exports.redis = {
+//     enable: true,
+//     package: 'egg-redis',
+// }

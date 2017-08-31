@@ -41,5 +41,19 @@ module.exports = appInfo => {
         csrf: false
     }
 
+    // config.redis = {
+    //     host: '127.0.0.1',
+    //     port: 6379,
+    //     db: 0,
+    //     password: ''
+    // }
+
+    config.session = {
+        maxAge: 24 * 60 * 60 * 1000,
+        key: 'EGG_SESSION',
+        httpOnly: true,
+        encrypt: true
+    }
+
     return config;
 };
