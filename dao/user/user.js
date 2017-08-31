@@ -1,9 +1,9 @@
 
 'use strict'
 
-const {MySql} = require('../../db/mysql')
+const {mysql} = require('../../db/mysql')
 
-exports.getAll = async (connection = MySql) => {
+exports.getAll = async (connection = mysql) => {
     const sql = `
 SELECT
     *
@@ -19,7 +19,7 @@ FROM
     }
 }
 
-exports.addOne = async ({id, username, gender}, connection) => {
+exports.addOne = async ({id, username, gender}, connection = mysql) => {
     const sql = `
 INSERT INTO
     test_user(_id, username, gender)

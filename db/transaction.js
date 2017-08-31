@@ -1,8 +1,8 @@
 
-const {MySql} = require('./mysql')
+const mysql = require('./mysql')
 
 module.exports = async (operation) => {
-    const connection = await MySql()
+    const connection = await mysql.getConnection()
     try {
         await connection.beginTransaction()
         const rlt = await operation(connection)
@@ -10,7 +10,7 @@ module.exports = async (operation) => {
         return Promise.resolve(rlt)
     } catch (e) {
         await connection.rollback()
-        throw new Error(e)
+        return Promise.reject(e)
     } finally {
         await connection.release()
     }

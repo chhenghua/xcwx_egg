@@ -18,12 +18,6 @@ const getConn = async () => {
     })
 }
 
-// exports.mysql = pool
-
-exports.MySql = async () => {
-    return new MySql(await getConn())
-}
-
 class MySql {
     constructor(conn) {
         this.conn = conn
@@ -85,87 +79,15 @@ class MySql {
     }
 }
 
-// exports.getConn = async () => {
-//     return new Promise((resolve, reject) => {
-//         pool.getConnection((err, conn) => {
-//             if (err) {
-//                 reject(err)
-//             } else {
-//                 resolve(conn)
-//             }
-//         })
-//     })
-// }
-//
-// MySQL.prototype.getConnection = async () => {
-//     this.conn = await getConn()
-// }
-//
-// MySQL.prototype.commit = async () => {
-//     const conn = this.conn
-//     return new Promise((resolve, reject) => {
-//         conn.commit((err) => {
-//             if (err) {
-//                 reject(err)
-//             } else {
-//                 resolve(logger.info('--------db commit success-------------'))
-//             }
-//         })
-//     })
-// }
-//
-// MySQL.prototype.rollback = async () => {
-//     const conn = this.conn
-//     return new Promise((resolve, reject) => {
-//         conn.rollback((error) => {
-//             if (error) {
-//                 reject(error)
-//             } else {
-//                 resolve(logger.info('--------db rollback success-------------'))
-//             }
-//         })
-//     })
-// }
-//
-// MySQL.prototype.release = async () => {
-//     const conn = this.conn
-//     return new Promise((resolve, reject) => {
-//         conn.release((error) => {
-//             if (error) {
-//                 reject(error)
-//             } else {
-//                 resolve(logger.info('--------db release success-------------'))
-//             }
-//         })
-//     })
-// }
-//
-// MySQL.prototype.query = async (sql, conditions) => {
-//     const conn = this.conn
-//     return new Promise((resolve, reject) => {
-//         conn.query(sql, conditions, (err, result) => {
-//             if (err) {
-//                 reject(err)
-//             } else {
-//                 resolve(result)
-//             }
-//         })
-//     })
-// }
-//
-// MySQL.prototype.beginTransaction = async () => {
-//     const conn = this.conn
-//     return new Promise((resolve, reject) => {
-//         conn.beginTransaction((err) => {
-//             if (err) {
-//                 reject(err)
-//             } else {
-//                 resolve(logger.info('--------db begin transaction -------------'))
-//             }
-//         })
-//     })
-// }
+exports.getConnection = async () => {
+    return new MySql(await getConn())
+}
 
-// module.exports = async () => {
-//     return new MySql(await getConn())
-// }
+exports.mysql = {
+    query: async (sql, conditions) => {
+        const mysql = new MySql(await getConn())
+        const rlt = await mysql.query(sql, conditions)
+        await mysql.release()
+        return rlt
+    }
+}
