@@ -1,6 +1,8 @@
 
 'use strict'
 
+const console = require('../../lib/log')
+
 const {mysql} = require('../../db/mysql')
 
 exports.getAll = async (connection = mysql) => {
@@ -25,12 +27,13 @@ INSERT INTO
     test_user(_id, username, gender)
 VALUES (?, ?, ?)
     `
-    const conditions = [id, username, gender]
+    // const conditions = [id, username, gender]
     try {
-        const rlt = await connection.query(sql, conditions)
-        return Promise.resolve(rlt)
+        console.log(`sql: ${sql}`)
+        // const rlt = await connection.query(sql, conditions)
+        return Promise.resolve({})
     } catch (e) {
-        logger.info('addOneException: %s', e)
+        console.log(e)
         throw new Error(e)
     }
 }

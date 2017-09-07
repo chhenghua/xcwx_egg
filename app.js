@@ -8,5 +8,5 @@ module.exports = app => {
     // Object.keys(dbconfig).forEach((key) => {
     //     orm.init(dbconfig[key])
     // })
-    global.logger = app.loggers.logger
+    global.logger = app.logger
 }
