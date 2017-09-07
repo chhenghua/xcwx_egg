@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = app => {
     class SearchController extends app.Controller {
@@ -8,5 +8,5 @@ module.exports = app => {
         }
     }
 
-    return SearchController;
-};
+    return SearchController
+}

@@ -28,9 +28,8 @@ class MySql {
             conn.commit((err) => {
                 if (err) {
                     return reject(err)
-                } else {
-                    return resolve(logger.info('--------db commit success-----------------'))
                 }
+                return resolve(logger.info('--------db commit success-----------------'))
             })
         })
     }
@@ -40,9 +39,9 @@ class MySql {
             conn.rollback((error) => {
                 if (error) {
                     return reject(error)
-                } else {
-                    return resolve(logger.info('--------db rollback success---------------'))
                 }
+                return resolve(logger.info('--------db rollback success---------------'))
+
             })
         })
     }
@@ -59,9 +58,9 @@ class MySql {
             conn.query(sql, conditions, (err, result) => {
                 if (err) {
                     return reject(err)
-                } else {
-                    return resolve(result)
                 }
+                return resolve(result)
+
             })
         })
     }
@@ -71,9 +70,9 @@ class MySql {
             conn.beginTransaction((err) => {
                 if (err) {
                     return reject(err)
-                } else {
-                    return resolve(logger.info('--------db begin transaction -------------'))
                 }
+                return resolve(logger.info('--------db begin transaction -------------'))
+
             })
         })
     }

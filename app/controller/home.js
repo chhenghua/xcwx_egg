@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const user = require('../service/user')
 
@@ -11,5 +11,5 @@ module.exports = app => {
         }
     }
 
-    return HomeController;
-};
+    return HomeController
+}

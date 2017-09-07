@@ -1,7 +1,6 @@
 const userDao = require('../../dao/user/user')
 const transaction = require('../../db/transaction')
 
-
 exports.getList = async ({name}) => {
 
     const rlt = await userDao.getAll()
@@ -30,8 +29,8 @@ exports.getOne = async ({userId}) => {
 exports.add = async ({username, pas, gender}) => {
 
     const run = async (conn) => {
-        const addOne = await userDao.addOne({id: 111, username: "ch", gender: 0}, conn)
-        const addTwo = await userDao.addOne({id: 'sss', username: "LY", gender: 0}, conn)
+        const addOne = await userDao.addOne({id: 111, username: 'ch', gender: 0}, conn)
+        const addTwo = await userDao.addOne({id: 'sss', username: 'LY', gender: 0}, conn)
         return {ss: 'sss'}
     }
 

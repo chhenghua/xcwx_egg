@@ -1,16 +1,16 @@
-'use strict';
+'use strict'
 
-module.exports = appInfo => {
-    const config = {};
+module.exports = (appInfo) => {
+    const config = {}
 
     // should change to your own
-    config.keys = appInfo.name + '_1502767796263_9308';
+    config.keys = appInfo.name + '_1502767796263_9308'
 
     // add your config here
 
     // 异常处理
-    config['middleware'] = ['errorHandler', 'logHandler'];
-    config['errorHandler'] = {
+    config.middleware = ['errorHandler', 'logHandler']
+    config.errorHandler = {
         match: '/*'
     }
 
@@ -25,7 +25,7 @@ module.exports = appInfo => {
     // }
 
     // dev watch
-    config['development'] = {
+    config.development = {
         watchDirs: ['../app/**', '../config', '../dao/**', '../db', '../lib/**'],
         ignoreDirs: [],
         fastReady: true,
@@ -55,5 +55,5 @@ module.exports = appInfo => {
         encrypt: true
     }
 
-    return config;
-};
+    return config
+}

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const user = require('../service/user')
 const Joi = require('joi')
@@ -21,7 +21,7 @@ module.exports = app => {
             const {name} = Util.validate(query, schema)
             const rlt = await user.getList({name})
             this.ctx.body = rlt
-        };
+        }
 
         async getOne() {
             const schema = Joi.object().keys({
@@ -31,7 +31,7 @@ module.exports = app => {
             const {userId} = Util.validate(params, schema)
             const rlt = await user.getOne({userId})
             this.ctx.body = rlt
-        };
+        }
 
         async add() {
             const scheme = Joi.object().keys({
@@ -46,5 +46,5 @@ module.exports = app => {
         }
     }
 
-    return UserController;
-};
+    return UserController
+}

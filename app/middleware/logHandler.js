@@ -3,7 +3,7 @@ module.exports = () => {
         try {
             const start = new Date()
             const request = this.request
-            yield next;
+            yield next
             const body = this.body
             logger.info({
                 method: request.method,
@@ -13,11 +13,11 @@ module.exports = () => {
                 'Response data': body
             })
         } catch (err) {
-            this.app.emit('error', err, this);
+            this.app.emit('error', err, this)
             this.body = {
                 success: false,
                 message: this.app.config.env === 'prod' ? 'Internal Server Error' : err.message
-            };
+            }
         }
     }
 }
