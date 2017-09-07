@@ -1,7 +1,7 @@
 
 'use strict'
 
-const console = require('../../lib/log')
+// const console = require('../../lib/log')
 
 const {mysql} = require('../../db/mysql')
 
@@ -29,7 +29,7 @@ VALUES (?, ?, ?)
     `
     // const conditions = [id, username, gender]
     try {
-        console.log(`sql: ${sql}`)
+        console.log(__FILE__, __LINE__, `sql: ${sql}`)
         // const rlt = await connection.query(sql, conditions)
         return Promise.resolve({})
     } catch (e) {
