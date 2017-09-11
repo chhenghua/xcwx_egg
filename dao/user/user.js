@@ -26,7 +26,6 @@ INSERT INTO
     test_user(_id, username, gender)
 VALUES (?, ?, ?)
     `
-    // const conditions = [id, username, gender]
     try {
         mylog.log(`sql: ${sql}`)
         const conditions = [id, username, gender]
