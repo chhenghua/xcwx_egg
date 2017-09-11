@@ -12,6 +12,7 @@ const getConn = async () => {
             if (err) {
                 reject(err)
             } else {
+                logger.info('--------db getConn success----------------')
                 resolve(conn)
             }
         })
@@ -29,7 +30,7 @@ class MySql {
                 if (err) {
                     return reject(err)
                 }
-                return resolve(logger.info('--------db commit success-----------------'))
+                return resolve(logger.info('--------db commit  success----------------'))
             })
         })
     }

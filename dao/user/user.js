@@ -1,8 +1,6 @@
 
 'use strict'
 
-// const console = require('../../lib/log')
-
 const {mysql} = require('../../db/mysql')
 
 exports.getAll = async (connection = mysql) => {
@@ -13,6 +11,7 @@ FROM
     test_user
     `
     try {
+        mylog.log(`sql: ${sql}`)
         const ret = await connection.query(sql)
         return Promise.resolve(ret)
     } catch (e) {
@@ -29,8 +28,9 @@ VALUES (?, ?, ?)
     `
     // const conditions = [id, username, gender]
     try {
-        console.log(__FILE__, __LINE__, `sql: ${sql}`)
-        // const rlt = await connection.query(sql, conditions)
+        mylog.log(`sql: ${sql}`)
+        const conditions = [id, username, gender]
+        const rlt = await connection.query(sql, conditions)
         return Promise.resolve({})
     } catch (e) {
         console.log(e)

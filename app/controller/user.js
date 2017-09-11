@@ -42,7 +42,7 @@ module.exports = app => {
             const body = this.ctx.request.body
             const {username, gender, address} = Util.validate(body, scheme)
             const rlt = await user.add({username, gender, address})
-            this.ctx.body = rlt
+            this.ctx.body = {}
         }
     }
 
