@@ -30,9 +30,8 @@ VALUES (?, ?, ?)
         mylog.log(`sql: ${sql}`)
         const conditions = [id, username, gender]
         const rlt = await connection.query(sql, conditions)
-        return Promise.resolve({})
+        return Promise.resolve(rlt)
     } catch (e) {
-        console.log(e)
         throw new Error(e)
     }
 }

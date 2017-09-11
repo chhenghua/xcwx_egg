@@ -9,8 +9,8 @@ module.exports = (appInfo) => {
     // add your config here
 
     // 异常处理
-    config.middleware = ['errorHandler', 'logHandler']
-    config.errorHandler = {
+    config.middleware = ['logHandler']
+    config.logHandler = {
         match: '/*'
     }
 
