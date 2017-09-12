@@ -19,7 +19,8 @@
     "arrow-parens": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "dot-notation": ["error", {"allowKeywords": false}],
-    "quote-props": ["error", "consistent"]
+    "quote-props": ["error", "consistent"],
+    "no-trailing-spaces": ["error", {"skipBlankLines": true}]
   },
   "parserOptions": {
     "ecmaVersion": 8,
