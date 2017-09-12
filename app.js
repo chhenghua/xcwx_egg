@@ -3,8 +3,8 @@
 // const orm = require('zbmy-orm')
 // const config = require('./config/constant/config')
 const log = require('tracer').console({
-    format: "{{timestamp}} <{{title}}> <{{path}}> in row {{line}}: {{message}}",
-    dateformat: "yyyy-mm-dd HH:MM:ss,l"
+    format: '{{timestamp}} <{{title}}> <{{path}}> in row {{line}}: {{message}}',
+    dateformat: 'yyyy-mm-dd HH:MM:ss,l'
 })
 
 module.exports = (app) => {
