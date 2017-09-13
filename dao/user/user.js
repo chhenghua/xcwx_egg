@@ -27,7 +27,7 @@ INSERT INTO
 VALUES (?, ?, ?)
     `
     try {
-        mylog.log(`sql: ${sql}`)
+        console.log(`sql: ${sql}`)
         const conditions = [id, username, gender]
         const rlt = await connection.query(sql, conditions)
         return Promise.resolve(rlt)

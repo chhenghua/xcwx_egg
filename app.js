@@ -20,5 +20,4 @@ module.exports = (app) => {
         enumerable: true
     })
 
-    console.log('111111111')
 }
