@@ -1,10 +1,10 @@
 
-const limit = require('../../../request-limit/lib/limit')
+const limit = require('request-limit')
 
 const urlMap = new Map()
-urlMap.set('/api/user/getList', {limit: 2, interval: 20})
-urlMap.set('/api/user/add', {limit: 2, interval: 2})
-urlMap.set('/api/user/getOne', {limit: 2, interval: 2})
+urlMap.set('/api/user/getList.get', {limit: 2, interval: 20})
+urlMap.set('/api/user/add.post', {limit: 2, interval: 2})
+urlMap.set('/api/user/getOne.get', {limit: 2, interval: 2})
 
 limit.init(urlMap, {
     store: {
@@ -13,4 +13,14 @@ limit.init(urlMap, {
     }
 })
 
-module.exports = limit
+exports.checkLimit = function *(req) {
+    return (async () => {
+        return await limit.checkLimit('token111', '/api/user/getList.get')
+    })()
+}
+
+exports.record = function *(req) {
+    return (async () => {
+        return await limit.record('token111', '/api/user/getList.get')
+    })()
+}

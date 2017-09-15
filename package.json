@@ -12,6 +12,7 @@
     "joi": "^10.6.0",
     "mysql": "^2.14.1",
     "node-logline": "^1.0.1",
+    "request-limit": "^1.0.0",
     "util": "^0.10.3"
   },
   "devDependencies": {

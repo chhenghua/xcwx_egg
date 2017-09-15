@@ -11,7 +11,7 @@ FROM
     test_user
     `
     try {
-        mylog.log(`sql: ${sql}`)
+        console.log(`sql: ${sql}`)
         const ret = await connection.query(sql)
         return Promise.resolve(ret)
     } catch (e) {

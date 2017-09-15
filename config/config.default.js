@@ -26,7 +26,7 @@ module.exports = (appInfo) => {
 
     // dev watch
     config.development = {
-        watchDirs: ['../app/**/*', '../config', '../dao', '../db', '../lib/**', '../middleware'],
+        watchDirs: ['../app/**/*', '../config', '../dao/**/*', '../db', '../lib/**', '../middleware/*'],
         ignoreDirs: [],
         fastReady: true,
         reloadOnDebug: true
