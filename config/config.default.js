@@ -8,7 +8,7 @@ module.exports = (appInfo) => {
 
     // add your config here
 
-    // 异常处理
+    // 中间件加载
     config.middleware = ['logHandler']
     config.logHandler = {
         match: '/*'
@@ -26,7 +26,7 @@ module.exports = (appInfo) => {
 
     // dev watch
     config.development = {
-        watchDirs: ['../app', '../config', '../dao', '../db', '../lib/**'],
+        watchDirs: ['../app/**/*', '../config', '../dao', '../db', '../lib/**', '../middleware'],
         ignoreDirs: [],
         fastReady: true,
         reloadOnDebug: true

@@ -9,4 +9,6 @@ module.exports = app => {
     home(app)
     search(app)
     user(app)
+    // console.log('app@@@@@'.repeat(20))
+    // console.log(app.router.stack)
 }

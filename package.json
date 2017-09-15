@@ -11,6 +11,7 @@
     "egg-session": "^2.1.1",
     "joi": "^10.6.0",
     "mysql": "^2.14.1",
+    "node-logline": "^1.0.1",
     "util": "^0.10.3"
   },
   "devDependencies": {
@@ -21,7 +22,7 @@
     "egg-mock": "^3.9.0",
     "eslint": "^4.3.0",
     "eslint-config-egg": "^5.0.0",
-    "node-logline": "^1.0.1",
+    "koa-limit": "^1.0.2",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
