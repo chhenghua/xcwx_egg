@@ -55,5 +55,13 @@ module.exports = (appInfo) => {
         encrypt: true
     }
 
+    config.cluster = {
+        listen: {
+            port: 7799,
+            hostname: '127.0.0.1',
+            workers: 2
+        }
+    }
+
     return config
 }
