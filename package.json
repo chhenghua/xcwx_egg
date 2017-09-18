@@ -10,6 +10,7 @@
     "egg-scripts": "^1.0.0",
     "egg-session": "^2.1.1",
     "joi": "^10.6.0",
+    "jsonwebtoken": "^8.0.1",
     "mysql": "^2.14.1",
     "node-logline": "^1.0.1",
     "request-limit": "^1.0.0",

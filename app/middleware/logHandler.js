@@ -10,15 +10,17 @@ module.exports = () => {
         const method = request.method
         const url = request.url
         console.log(`Requests: ${url} ${method.toUpperCase()} start:`)
-        const limitRlt = yield limit.checkLimit()
+        const checkRlt = yield limit.checks(request)
         try {
-            if (limitRlt.isLimit) {
-                console.log(limitRlt)
-                return this.body = {
-                    success: false,
-                    remaining: limitRlt.remaining,
-                    message: limitRlt.errmsg
-                }
+            if (!checkRlt.valid || checkRlt.isLimit) {
+                logger.info({
+                    method: method,
+                    url: url,
+                    'Request body': request.body || null,
+                    time: (new Date() - start) + ' ms',
+                    'Response data': checkRlt
+                })
+                return this.body = checkRlt
             }
             yield next
             const body = this.body
@@ -36,7 +38,7 @@ module.exports = () => {
                 message: this.app.config.env === 'prod' ? 'Internal Server Error' : err.message
             }
         } finally {
-            yield limit.record()
+            yield limit.record(request)
             console.log(`Requests: ${url} ${method.toUpperCase()} finish.`)
         }
     }
