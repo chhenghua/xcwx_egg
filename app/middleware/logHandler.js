@@ -14,21 +14,22 @@ module.exports = () => {
         try {
             if (!checkRlt.valid || checkRlt.isLimit) {
                 logger.info({
-                    method: method,
-                    url: url,
+                    'method': method,
+                    'url': url,
                     'Request body': request.body || null,
-                    time: (new Date() - start) + ' ms',
+                    'time': (new Date() - start) + ' ms',
                     'Response data': checkRlt
                 })
-                return this.body = checkRlt
+                this.body = checkRlt
+                return
             }
             yield next
             const body = this.body
             logger.info({
-                method: method,
-                url: url,
+                'method': method,
+                'url': url,
                 'Request body': request.body || null,
-                time: (new Date() - start) + ' ms',
+                'time': (new Date() - start) + ' ms',
                 'Response data': body
             })
         } catch (err) {
