@@ -78,6 +78,7 @@ exports.checks = function *(req) {
         const limitRlt = await limit.checkLimit('token111', '/api/user/getList.get')
         limitRlt.valid = getToken.valid
         limitRlt.errmsg = limitRlt.errmsg || getToken.errmsg
+        limitRlt.needLogin = getToken.needLogin
         return limitRlt
     })()
 }

@@ -11,8 +11,10 @@ module.exports = () => {
         const url = request.url
         console.log(`Requests: ${url} ${method.toUpperCase()} start:`)
         const checkRlt = yield limit.checks(request)
+        console.log('checkRlt###########'.repeat(10))
+        console.log(checkRlt)
         try {
-            if (!checkRlt.valid || checkRlt.isLimit) {
+            if ((!checkRlt.valid || checkRlt.isLimit) && checkRlt.needLogin) {
                 logger.info({
                     'method': method,
                     'url': url,

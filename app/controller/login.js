@@ -17,8 +17,13 @@ module.exports = app => {
 
             // 校验
             const {username} = Util.validate(this.ctx.request.body, schema)
-            const rlt = await token.getToken(1234567)
-            this.ctx.body = rlt
+            const array = ['1', '2', '3', '4']
+            array.forEach(async (userId) => {
+                const rlt = await token.getToken(userId)
+                console.log(`userId ${userId} => ${rlt}`)
+            })
+            // const rlt = await token.getToken(1234567)
+            this.ctx.body = {}
         }
     }
 
