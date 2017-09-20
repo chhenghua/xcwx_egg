@@ -24,7 +24,6 @@
     "egg-mock": "^3.9.0",
     "eslint": "^4.3.0",
     "eslint-config-egg": "^5.0.0",
-    "koa-limit": "^1.0.2",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
