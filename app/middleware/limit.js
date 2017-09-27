@@ -18,7 +18,7 @@ limit.init(urlMap, {
 
 const checkToken = async ({req, url}) => {
     const authorization = req.header ? req.header.Authorization || req.header.authorization : ''
-    if (authorization.trim() === '') {
+    if (!authorization || authorization.trim() === '') {
         return {
             isLogined: false,
             token: ''
