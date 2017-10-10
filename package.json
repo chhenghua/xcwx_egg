@@ -13,7 +13,7 @@
     "jsonwebtoken": "^8.0.1",
     "mysql": "^2.14.1",
     "node-logline": "^1.0.1",
-    "request-limit": "^1.0.7",
+    "request-limit": "^1.0.8",
     "util": "^0.10.3"
   },
   "devDependencies": {
