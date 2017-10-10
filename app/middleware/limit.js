@@ -16,28 +16,53 @@ limit.init(urlMap, {
     }
 })
 
-const checkToken = async ({req, url}) => {
-    const authorization = req.header ? req.header.Authorization || req.header.authorization : ''
+const getTokenAndUrl = async ({req}) => {
+    const url = `${req.url}.${req.method.toLowerCase()}`
+    const authorization = req.header ? (req.header.Authorization || req.header.authorization) : ''
     if (!authorization || authorization.trim() === '') {
         return {
-            isLogined: false,
+            url,
             token: ''
         }
     }
     const tokenArr = authorization.split(' ')
     if (tokenArr[0] !== 'Bearer') {
         return {
+            url,
+            token: ''
+        }
+    }
+    return {
+        url,
+        token: tokenArr[1]
+    }
+}
+
+// 检查token是否合法
+const checkToken = async ({req}) => {
+    const tokenAndUrl = await getTokenAndUrl({req})
+    const token = tokenAndUrl.token
+    if (token.trim() === '') {
+        return {
             isLogined: false,
             token: ''
         }
     }
-    let token
+
     try {
-        token = await jwtToken.verifyToken({token: tokenArr[1]})
+        const verfiyToken = await jwtToken.verifyToken({token: token})
+        // if (token.data === req.session.userId) {
         return {
             isLogined: true,
-            userId: token.data,
-            valid: true
+            userId: verfiyToken.data,
+            valid: true,
+            token: token
+        }
+        // }
+        delete req.session.userId
+        return {
+            isLogined: true,
+            valid: false
         }
     } catch (e) {
         return {
@@ -49,15 +74,16 @@ const checkToken = async ({req, url}) => {
 
 }
 
-// 首先检查是否需要登录
-const checkLogin = async (req) => {
+// 检查是否需要登录, 默认需要登录
+const checkLogin = async ({req}) => {
 
-    const url = `${req.url}.${req.method.toLowerCase()}`
+    const tokenAndUrl = await getTokenAndUrl({req})
+    const url = tokenAndUrl.url
     let rules
     let needLogin = true
     if (urlMap.has(url)) {
         rules = urlMap.get(url)
-        needLogin = rules.needLogin === false ? rules.needLogin : true
+        needLogin = !!rules.needLogin
     }
     return {
         needLogin: needLogin,
@@ -66,16 +92,31 @@ const checkLogin = async (req) => {
 
 }
 
+/**
+ * 这里所做检查依次为:
+ * 1.检查是否需要登录;
+ * 2.检查token是否合法;
+ * 3.检查访问频率.
+ * @param req
+ * @returns {Promise}
+ */
 exports.checks = function *(req) {
     return (async () => {
-        const needLogin = await checkLogin(req)
+        // 检查是否需要登录
+        const needLogin = await checkLogin({req})
         if (!needLogin.needLogin) {
             return {
-                needLogin: false
+                needLogin: false,
+                valid: true
             }
         }
+        // 检查token是否合法
         const getToken = await checkToken({req, url: needLogin.url})
-        const limitRlt = await limit.checkLimit('token111', '/api/user/getList.get')
+        if (!getToken.valid) {
+            return getToken
+        }
+        // 检查访问频率
+        const limitRlt = await limit.checkLimit(getToken.token, needLogin.url)
         limitRlt.valid = getToken.valid
         limitRlt.errmsg = limitRlt.errmsg || getToken.errmsg
         limitRlt.needLogin = getToken.needLogin
@@ -85,6 +126,7 @@ exports.checks = function *(req) {
 
 exports.record = function *(req) {
     return (async () => {
-        return await limit.record('token111', '/api/user/getList.get')
+        const tokenAndUrl = await getTokenAndUrl({req})
+        return await limit.record(tokenAndUrl.token, tokenAndUrl.url)
     })()
 }

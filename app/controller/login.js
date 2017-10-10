@@ -11,19 +11,19 @@ module.exports = app => {
 
             // 首先定义需要校验的参数
             const schema = Joi.object().keys({
-                username: Joi.string().required()
+                username: Joi.string().optional()
             })
             console.log(this.ctx.request.body)
 
             // 校验
             const {username} = Util.validate(this.ctx.request.body, schema)
-            const array = ['1', '2', '3', '4']
-            array.forEach(async (userId) => {
-                const rlt = await token.getToken(userId)
-                console.log(`userId ${userId} => ${rlt}`)
-            })
-            // const rlt = await token.getToken(1234567)
-            this.ctx.body = {}
+            // const array = ['1', '2', '3', '4']
+            // array.forEach(async (userId) => {
+            //     const rlt = await token.getToken(userId)
+            //     console.log(`userId ${userId} => ${rlt}`)
+            // })
+            const rlt = await token.getToken(1234567)
+            this.ctx.body = {token: rlt}
         }
     }
 

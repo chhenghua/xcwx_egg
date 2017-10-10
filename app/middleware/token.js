@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 const expire = 30 * 1000 * 60
 
-const secret = 'secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret'
+const secret = '*#$xc9/5`0,=2X$%4/dYE_C_NyO59t>Qn#P<RBD$comwKNv|^.`(p7^O<P+|0GeJ'
 
 exports.getToken = async (userId) => {
     return new Promise((resolve, reject) => {

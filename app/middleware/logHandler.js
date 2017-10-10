@@ -9,12 +9,10 @@ module.exports = () => {
         const request = this.request
         const method = request.method
         const url = request.url
-        console.log(`Requests: ${url} ${method.toUpperCase()} start:`)
+        console.log(`\nRequests: ${url} ${method.toUpperCase()} start:`)
         const checkRlt = yield limit.checks(request)
-        console.log('checkRlt###########'.repeat(10))
-        console.log(checkRlt)
         try {
-            if ((!checkRlt.valid || checkRlt.isLimit) && checkRlt.needLogin) {
+            if (!checkRlt.valid || checkRlt.needLogin) {
                 logger.info({
                     'method': method,
                     'url': url,
@@ -22,6 +20,11 @@ module.exports = () => {
                     'time': (new Date() - start) + ' ms',
                     'Response data': checkRlt
                 })
+                this.response.status = 401
+                this.body = checkRlt
+                return
+            }
+            if (checkRlt.isLimit) {
                 this.body = checkRlt
                 return
             }
@@ -42,7 +45,7 @@ module.exports = () => {
             }
         } finally {
             yield limit.record(request)
-            console.log(`Requests: ${url} ${method.toUpperCase()} finish.`)
+            console.log(`Requests: ${url} ${method.toUpperCase()} finish.\n`)
         }
     }
 }
