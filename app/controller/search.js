@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = app => {
+module.exports = (app) => {
     class SearchController extends app.Controller {
         async indexSearch() {
             const query = this.ctx.query

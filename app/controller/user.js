@@ -5,7 +5,7 @@ const Joi = require('joi')
 const Util = require('../../utils')
 
 // 路由层完成参数的检验
-module.exports = app => {
+module.exports = (app) => {
     class UserController extends app.Controller {
         async getList() {
 

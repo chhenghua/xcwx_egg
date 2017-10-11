@@ -6,7 +6,7 @@ const search = require('./router/search')
 const user = require('./router/user')
 const login = require('./router/login')
 
-module.exports = app => {
+module.exports = (app) => {
     home(app)
     search(app)
     user(app)

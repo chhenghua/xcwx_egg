@@ -50,13 +50,13 @@ const checkToken = async ({req}) => {
     }
 
     try {
-        const verfiyToken = await jwtToken.verifyToken({token: token})
+        const verfiyToken = await jwtToken.verifyToken({token})
         // if (token.data === req.session.userId) {
         return {
             isLogined: true,
             userId: verfiyToken.data,
             valid: true,
-            token: token
+            token
         }
         // }
         delete req.session.userId
@@ -86,8 +86,8 @@ const checkLogin = async ({req}) => {
         needLogin = !!rules.needLogin
     }
     return {
-        needLogin: needLogin,
-        url: url
+        needLogin,
+        url
     }
 
 }
@@ -100,7 +100,7 @@ const checkLogin = async ({req}) => {
  * @param req
  * @returns {Promise}
  */
-exports.checks = function *(req) {
+exports.checks = function* (req) {
     return (async () => {
         // 检查是否需要登录
         const needLogin = await checkLogin({req})
@@ -124,7 +124,7 @@ exports.checks = function *(req) {
     })()
 }
 
-exports.record = function *(req) {
+exports.record = function* (req) {
     return (async () => {
         const tokenAndUrl = await getTokenAndUrl({req})
         return await limit.record(tokenAndUrl.token, tokenAndUrl.url)

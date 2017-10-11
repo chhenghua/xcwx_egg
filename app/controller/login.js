@@ -5,7 +5,7 @@ const Util = require('../../utils')
 const token = require('../middleware/token')
 
 // 路由层完成参数的检验
-module.exports = app => {
+module.exports = (app) => {
     class LoginController extends app.Controller {
         async loginIn() {
 

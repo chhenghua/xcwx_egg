@@ -7,17 +7,17 @@ module.exports = (sequelize) => {
         _id: {
             type: Sequelize.STRING(32),
             primaryKey: true,
-            comment: "主键"
+            comment: '主键'
         },
         username: {
             type: Sequelize.STRING(16),
             allowNull: false,
-            comment: "用户名"
+            comment: '用户名'
         },
         gender: {
             type: Sequelize.INTEGER,
             allowNull: false,
-            comment: "性别"
+            comment: '性别'
         }
     }, {
         freezeTableName: true,
