@@ -24,6 +24,7 @@
     "egg-mock": "^3.9.0",
     "eslint": "^4.3.0",
     "eslint-config-egg": "^5.0.0",
+    "mocha": "^4.0.1",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
@@ -33,7 +34,7 @@
     "start": "egg-scripts start --daemon",
     "stop": "egg-scripts stop",
     "dev": "egg-bin dev --port 7001",
-    "test": "npm run lint -- --fix && npm run test-local",
+    "test": "mocha",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",

@@ -17,7 +17,7 @@ limit.init(urlMap, {
 })
 
 const getTokenAndUrl = async ({req}) => {
-    const url = `${req.url}.${req.method.toLowerCase()}`
+    const url = `${req.url.split('?')[0]}.${req.method.toLowerCase()}`
     const authorization = req.header ? (req.header.Authorization || req.header.authorization) : ''
     if (!authorization || authorization.trim() === '') {
         return {
