@@ -1,7 +1,8 @@
 exports.url = [
     {
-        url: '/api/user/getList',
-        method: 'get',
-        params: {name: 'this a query name'}
+        url: '/api/login',
+        method: 'post',
+        params: {username: 'sss'},
+        controller: 'login'
     }
 ]

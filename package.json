@@ -34,7 +34,7 @@
     "start": "egg-scripts start --daemon",
     "stop": "egg-scripts stop",
     "dev": "egg-bin dev --port 7001",
-    "test": "mocha",
+    "test": "node ./test/lib/index.js && egg-bin test",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
