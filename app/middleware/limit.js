@@ -4,10 +4,12 @@ const limit = require('request-limit')
 const jwtToken = require('./token')
 
 const urlMap = new Map()
-urlMap.set('/api/user/getList.get', {limit: 2, interval: 20, needLogin: true})
+urlMap.set('/api/user/getList.get', {limit: 2, interval: 20, needLogin: false})
 urlMap.set('/api/user/add.post', {limit: 2, interval: 2})
 urlMap.set('/api/user/getOne.get', {limit: 2, interval: 2})
 urlMap.set('/api/login.post', {needLogin: false})
+urlMap.set('/api/sss.get', {needLogin: false})
+urlMap.set('/api/search/index.post', {needLogin: false})
 
 limit.init(urlMap, {
     store: {

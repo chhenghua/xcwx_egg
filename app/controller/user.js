@@ -27,7 +27,7 @@ module.exports = (app) => {
             const schema = Joi.object().keys({
                 userId: Joi.number().required()
             })
-            const params = this.ctx.params
+            const params = this.ctx.query
             const {userId} = Util.validate(params, schema)
             const rlt = await user.getOne({userId})
             this.ctx.body = rlt

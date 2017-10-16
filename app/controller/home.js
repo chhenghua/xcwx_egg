@@ -6,8 +6,8 @@ const user = require('../service/user')
 module.exports = (app) => {
     class HomeController extends app.Controller {
         async index() {
-            const rlt = await user.find({e: 'a', d: 'e'})
-            this.ctx.body = rlt
+            // const rlt = await user.find({e: 'a', d: 'e'})
+            this.ctx.body = {success: 'success'}
         }
     }
 
