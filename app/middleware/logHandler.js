@@ -12,7 +12,7 @@ module.exports = () => {
         console.log(`\nRequests: ${url} ${method.toUpperCase()} start:`)
         const checkRlt = yield limit.checks(request)
         try {
-            if (!checkRlt.valid || checkRlt.needLogin) {
+            if (!checkRlt.verify || !checkRlt.valid || checkRlt.needLogin) {
                 logger.info({
                     'method': method,
                     'url': url,

@@ -86,7 +86,6 @@ exports.verify = (params) => {
             verify: false
         }
     }
-    console.log(typeof params)
     const keysAndParams = getParams(params)
     if (!keysAndParams.verify) {
         return {

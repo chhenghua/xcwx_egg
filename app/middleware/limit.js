@@ -2,6 +2,7 @@
 const limit = require('request-limit')
 
 const jwtToken = require('./token')
+const {verify} = require('./verify')
 
 const urlMap = new Map()
 urlMap.set('/api/user/getList.get', {limit: 2, interval: 20, needLogin: false})
@@ -104,12 +105,24 @@ const checkLogin = async ({req}) => {
  */
 exports.checks = function* (req) {
     return (async () => {
+
+        // 检查参数合法性
+        const verifyParams = req.body.sign ? req.body : req.query
+        const verifyRlt = verify(verifyParams)
+        if (!verifyRlt.verify) {
+            verifyRlt.valid = false
+            verifyRlt.needLogin = true
+            return verifyRlt
+        }
+        delete req.body.sign
+
         // 检查是否需要登录
         const needLogin = await checkLogin({req})
         if (!needLogin.needLogin) {
             return {
                 needLogin: false,
-                valid: true
+                valid: true,
+                verify: verifyRlt.verify
             }
         }
         // 检查token是否合法
@@ -117,11 +130,13 @@ exports.checks = function* (req) {
         if (!getToken.valid) {
             return getToken
         }
+
         // 检查访问频率
         const limitRlt = await limit.checkLimit(getToken.token, needLogin.url)
         limitRlt.valid = getToken.valid
         limitRlt.errmsg = limitRlt.errmsg || getToken.errmsg
         limitRlt.needLogin = getToken.needLogin
+        limitRlt.verify = verifyRlt.verify
         return limitRlt
     })()
 }
