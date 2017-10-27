@@ -8,6 +8,9 @@ const setHttpMethod = (item) => {
     let itData = `    it('should ${method.toUpperCase()} ${item.url}', () => {\n`
     itData = `${itData}        return app.httpRequest()\n`
     itData = `${itData}            .${method === 'get' || method === 'head' ? 'get' : method}('${item.url}')\n`
+    if (item.headers) {
+        itData = `${itData}            .set(${JSON.stringify(item.headers)})\n`
+    }
     switch (item.method.toLowerCase()) {
         case 'get':
         case 'head':
