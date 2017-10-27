@@ -35,12 +35,13 @@
     "start": "egg-scripts start --daemon",
     "stop": "egg-scripts stop",
     "dev": "egg-bin dev --port 7001",
-    "test": "node ./test/lib/index.js && egg-bin test",
+    "test": "node ./test/lib/unit.js && egg-bin test",
     "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
+    "cov": "node ./test/lib/coverage.js && egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "mocha": "./node_modules/.bin/mocha ./test/spec/{1,2}.js"
   },
   "ci": {
     "version": "6, 8"

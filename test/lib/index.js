@@ -1,21 +1,24 @@
 
 const {dataSet} = require('./dataSet')
-const urlArray = require('../index').url
 
-const controllerMap = new Map()
-const controllerKey = []
+exports.subBarrels = async (urlArray) => {
 
-// 对controller进行分桶
-urlArray.forEach((each) => {
-    if (!controllerMap.has(each.controller)) {
-        controllerMap.set(each.controller, [])
-        controllerKey.push(each.controller)
-    }
-    const getValue = controllerMap.get(each.controller)
-    getValue.push(each)
-    controllerMap.set(each.controller, getValue)
-})
+    const controllerMap = new Map()
+    const controllerKey = []
+    const urlMap = {}
 
-return (async () => {
+    // 对controller进行分桶
+    urlArray.forEach((each) => {
+        if (!controllerMap.has(each.controller)) {
+            controllerMap.set(each.controller, [])
+            controllerKey.push(each.controller)
+        }
+        const getValue = controllerMap.get(each.controller)
+        if (!urlMap[`${each.url}.${each.method.toLowerCase()}`]) {
+            getValue.push(each)
+            urlMap[`${each.url}.${each.method.toLowerCase()}`] = true
+        }
+        controllerMap.set(each.controller, getValue)
+    })
     await dataSet({controllerKey, controllerMap})
-})()
+}
