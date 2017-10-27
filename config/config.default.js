@@ -8,12 +8,6 @@ module.exports = (appInfo) => {
 
     // add your config here
 
-    // 中间件加载
-    config.middleware = ['logHandler']
-    config.logHandler = {
-        match: '/*'
-    }
-
     // 日志切割处理
     // config['logrotator'] = {
     //     filesRotateByHour: [],
@@ -25,12 +19,12 @@ module.exports = (appInfo) => {
     // }
 
     // dev watch
-    config.development = {
-        watchDirs: ['../app/**/*', '../config/*', '../dao/**/*', '../db', '../lib/**', '../middleware/*'],
-        ignoreDirs: [],
-        fastReady: true,
-        reloadOnDebug: true
-    }
+    // config.development = {
+    //     watchDirs: ['**/**/**/*'],
+    //     ignoreDirs: ['../coverage/', '../logs/', '../run/'],
+    //     fastReady: true,
+    //     reloadOnDebug: true
+    // }
 
     config.logger = {
         consoleLevel: 'INFO',

@@ -80,7 +80,7 @@ const getSortedString = (keys, paramsMap) => {
     return sortedString.substring(1)
 }
 
-exports.verify = (params) => {
+const verify = (params) => {
     if (!params) {
         return {
             verify: false
@@ -96,5 +96,34 @@ exports.verify = (params) => {
     const validSign = encrypt(getSortedString(keysAndParams.keys, keysAndParams.paramsMap))
     return {
         verify: paramsSign === validSign
+    }
+}
+
+/**
+ * 参数验证.
+ * @param req
+ * @returns {Promise}
+ */
+module.exports = () => {
+    return function* logHandler(next) {
+        const request = this.request
+        const signParams = request.query.sign ? request.query : request.body
+        const checkRlt = verify(signParams)
+        try {
+            if (!checkRlt.verify) {
+                this.response.status = 401
+                this.body = checkRlt
+                return
+            }
+            delete request.query.sign
+            delete request.body.sign
+            yield next
+        } catch (err) {
+            this.app.emit('error', err, this)
+            this.body = {
+                success: false,
+                message: this.app.config.env === 'prod' ? 'Internal Server Error' : err.message
+            }
+        }
     }
 }

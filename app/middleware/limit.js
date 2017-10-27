@@ -5,10 +5,10 @@ const jwtToken = require('./token')
 const {verify} = require('./verify')
 
 const urlMap = new Map()
-urlMap.set('/api/user/getList.get', {limit: 2, interval: 20, needLogin: false})
+urlMap.set('/api/user/getList.get', {limit: 20, interval: 20, needLogin: false})
 urlMap.set('/api/user/add.post', {limit: 2, interval: 2})
 urlMap.set('/api/user/getOne.get', {limit: 2, interval: 2})
-urlMap.set('/api/login.post', {needLogin: false})
+urlMap.set('/api/login.post', {limit: 2, interval: 20, needLogin: false})
 urlMap.set('/api/sss.get', {needLogin: false})
 urlMap.set('/api/search/index.post', {needLogin: false})
 
@@ -41,109 +41,69 @@ const getTokenAndUrl = async ({req}) => {
     }
 }
 
-// 检查token是否合法
-const checkToken = async ({req}) => {
-    const tokenAndUrl = await getTokenAndUrl({req})
-    const token = tokenAndUrl.token
-    if (token.trim() === '') {
-        return {
-            isLogined: false,
-            token: ''
-        }
-    }
-
-    try {
-        const verfiyToken = await jwtToken.verifyToken({token})
-        // if (token.data === req.session.userId) {
-        return {
-            isLogined: true,
-            userId: verfiyToken.data,
-            valid: true,
-            token
-        }
-        // }
-        delete req.session.userId
-        return {
-            isLogined: true,
-            valid: false
-        }
-    } catch (e) {
-        return {
-            isLogined: true,
-            errmsg: e.message,
-            valid: false
-        }
-    }
-
-}
-
-// 检查是否需要登录, 默认需要登录
-const checkLogin = async ({req}) => {
-
-    const tokenAndUrl = await getTokenAndUrl({req})
-    const url = tokenAndUrl.url
-    let rules
-    let needLogin = true
-    if (urlMap.has(url)) {
-        rules = urlMap.get(url)
-        needLogin = !!rules.needLogin
-    }
-    return {
-        needLogin,
-        url
-    }
-
-}
-
 /**
- * 这里所做检查依次为:
- * 1.检查是否需要登录;
- * 2.检查token是否合法;
- * 3.检查访问频率.
+ * 检查访问频率.
  * @param req
  * @returns {Promise}
  */
-exports.checks = function* (req) {
+const checks = function* (req) {
     return (async () => {
-
-        // 检查参数合法性
-        const verifyParams = req.body.sign ? req.body : req.query
-        const verifyRlt = verify(verifyParams)
-        if (!verifyRlt.verify) {
-            verifyRlt.valid = false
-            verifyRlt.needLogin = true
-            return verifyRlt
-        }
-        delete req.body.sign
-
-        // 检查是否需要登录
-        const needLogin = await checkLogin({req})
-        if (!needLogin.needLogin) {
-            return {
-                needLogin: false,
-                valid: true,
-                verify: verifyRlt.verify
-            }
-        }
-        // 检查token是否合法
-        const getToken = await checkToken({req, url: needLogin.url})
-        if (!getToken.valid) {
-            return getToken
-        }
-
         // 检查访问频率
-        const limitRlt = await limit.checkLimit(getToken.token, needLogin.url)
-        limitRlt.valid = getToken.valid
-        limitRlt.errmsg = limitRlt.errmsg || getToken.errmsg
-        limitRlt.needLogin = getToken.needLogin
-        limitRlt.verify = verifyRlt.verify
-        return limitRlt
+        return await limit.checkLimit('token', '/api/login.post')
     })()
 }
 
-exports.record = function* (req) {
+const record = function* (req) {
     return (async () => {
-        const tokenAndUrl = await getTokenAndUrl({req})
-        return await limit.record(tokenAndUrl.token, tokenAndUrl.url)
+        // const tokenAndUrl = await getTokenAndUrl({req})
+        return await limit.record('token', '/api/login.post')
     })()
+}
+
+/**
+ * 检查访问频率.
+ * @param req
+ * @returns {Promise}
+ */
+module.exports = () => {
+    return function* logHandler(next) {
+        const start = new Date()
+        const request = this.request
+        const method = request.method
+        const url = request.url
+        console.log(`\nRequests: ${url} ${method.toUpperCase()} start:`)
+        const checkRlt = yield checks(request)
+        try {
+            if (checkRlt.isLimit) {
+                logger.info({
+                    'method': method,
+                    'url': url,
+                    'Request body': request.body || null,
+                    'time': (new Date() - start) + ' ms',
+                    'Response data': checkRlt
+                })
+                this.response.status = 401
+                this.body = checkRlt
+                return
+            }
+            yield next
+            const body = this.body
+            logger.info({
+                'method': method,
+                'url': url,
+                'Request body': request.body || null,
+                'time': (new Date() - start) + ' ms',
+                'Response data': body
+            })
+        } catch (err) {
+            this.app.emit('error', err, this)
+            this.body = {
+                success: false,
+                message: this.app.config.env === 'prod' ? 'Internal Server Error' : err.message
+            }
+        } finally {
+            yield record(request)
+            console.log(`Requests: ${url} ${method.toUpperCase()} finish.\n`)
+        }
+    }
 }

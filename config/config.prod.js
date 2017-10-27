@@ -12,3 +12,12 @@ exports.cluster = {
         workers: 2
     }
 }
+
+// 中间件加载: 这里按顺序加载
+exports.middleware = ['limit', 'verify']
+exports.limit = {
+    match: '/*'
+}
+exports.verify = {
+    match: '/*'
+}
