@@ -11,3 +11,8 @@ exports.logger = {
 // exports.verify = {
 //     match: '/*'
 // }
+
+exports.middleware = ['logHandler']
+exports.logHandler = {
+    match: '/*'
+}
