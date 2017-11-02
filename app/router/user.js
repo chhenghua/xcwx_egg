@@ -8,4 +8,6 @@ module.exports = (app) => {
     app.get('/api/user/getList', 'user.getList')
     app.get('/api/user/getOne', 'user.getOne')
     app.post('/api/user/add', 'user.add')
+    app.post('/api/user/addSalary', 'user.addSalary')
+    app.post('/api/user/addDep', 'user.addDep')
 }
